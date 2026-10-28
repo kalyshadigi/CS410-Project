@@ -29,6 +29,7 @@ target_link_libraries(patron PUBLIC person) # cuz patron inherits person
 
 add_executable(app src/main.cpp)
 target_link_libraries(app PRIVATE patron)
+target_link_libraries(app PRIVATE person)
 
 # -----------------------------
 # Fetch GoogleTest
@@ -65,7 +66,7 @@ gtest_discover_tests(patron_tests)
 # commands/notes
 # -----------------------------
 
-# cmake -D . -B build
+# cmake -S . -B build
 # cmake --build build
 
 # ctest --test-dir build
