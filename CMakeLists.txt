@@ -23,6 +23,9 @@ add_library(patron src/Patron.cpp)
 target_include_directories(patron PUBLIC include)
 target_link_libraries(patron PUBLIC person) # cuz patron inherits person
 
+add_library(library src/Library.cpp)
+target_include_directories(library PUBLIC include)
+
 # -----------------------------
 # include directories
 # -----------------------------
@@ -30,6 +33,7 @@ target_link_libraries(patron PUBLIC person) # cuz patron inherits person
 add_executable(app src/main.cpp)
 target_link_libraries(app PRIVATE patron)
 target_link_libraries(app PRIVATE person)
+target_link_libraries(app PRIVATE library)
 
 # -----------------------------
 # Fetch GoogleTest
