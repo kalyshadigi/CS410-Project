@@ -44,3 +44,6 @@ void Person::signOut() {
     isSignedIn = false;
 }
 
+void Person::displayActions(Catalog* cat){
+    std::cout << "you shouldnt be here... " << std::endl;
+}

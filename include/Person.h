@@ -2,6 +2,8 @@
 #define PERSON_H
 #include <string>
 #include <unordered_map>
+#include "Catalog.h"
+#include <iostream>
 
 class Person {
     private:
@@ -20,6 +22,13 @@ class Person {
 
         bool signIn(std::string email, std::string password);
         void signOut();
+
+        /**
+         * Blocking function that displays the user options
+         * for a patron or librarian
+         * Patron and Librarian Classes have their own versions
+         */
+        virtual void displayActions(Catalog* cat);
 };
 
 #endif

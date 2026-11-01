@@ -2,6 +2,7 @@
 #define LIBRARIAN_H
 
 #include "Person.h"
+#include "Library.h"
 
 class Librarian : public Person {
 public:
@@ -16,6 +17,11 @@ public:
     void addToHoldList();
     void removeFromHoldList();
 
+    /**
+     * Blocking function that displays the user options
+     * for a librarian
+     */
+    void displayActions(Catalog *cat) override;
 };
 
 #endif

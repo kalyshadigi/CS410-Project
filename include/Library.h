@@ -1,7 +1,6 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 #include <iostream>
-
 #include <unordered_map>
 #include <string>
 
@@ -15,7 +14,8 @@ private:
      * Initializes with one default account:
      * Librarian w credentials ("admin", "password")
      */
-    std::unordered_map<std::string, Person> users;
+    std::unordered_map<std::string, Person*> users;
+    int totalUsers = 0;
 public:
     Catalog* catalog;
     Clock* clock;
@@ -23,24 +23,14 @@ public:
     Library();
     // Library(std::string csvToLoad);
 
-    Catalog getCatalog();
-    bool personExists(std::string user_id);
-    Person getPerson(std::string user_id);
+    bool personExists(std::string email);
+    bool personExists(int user_id);
 
     /**
      * Blocking function that allows user to create and
-     * sign in to a new patron account
+     * sign in to a new account
      */
-    void createPatron();
-
-    /**
-     * Blocking function that allows user to create and
-     * sign in to a new librarian account
-     * Should only be called from librarian actions?
-     * like only available for librarian to make a new
-     * librarian an account
-     */
-    void createLibrarian();
+    void createAccount(bool isLibrarian);
 
     /**
     * Blocking function that allows user to sign into

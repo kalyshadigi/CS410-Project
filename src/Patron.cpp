@@ -37,3 +37,54 @@ void Patron::returnBook(const int bookId) {
     }
     borrowedBooks.erase(bookId);
 }
+
+void Patron::displayActions(Catalog* cat) {
+    bool inLoop = true;
+    std::string response;
+    while (inLoop) {
+        std::cout << getUserName() << "'s Dashboard" << std::endl;
+        std::cout << "==================================" << std::endl;
+        std::cout << "Email: " << getEmail() << std::endl;
+        std::cout << "Fees: " << getAccountDebt() << std::endl;
+        std::cout << "============== MENU ==============" << std::endl;
+        std::cout << "1) Pay Fees" << std::endl;
+        std::cout << "2) View Borrowed Items" << std::endl;
+        std::cout << "3) Return Item" << std::endl;
+        std::cout << "4) Search Catalog" << std::endl;
+        std::cout << "5) SIGN OUT" << std::endl;
+        std::cout << "==================================" << std::endl;
+        std::cout << "Enter an integer: ";
+        getline(std::cin, response);
+        std::cout << std::endl;
+
+        if (response == "1"){ //pay fees
+            if (!accountDebt) {
+                std::cout << "This account does not have any fees." << std::endl;
+            } else {
+                std::cout << "**TODO: pay account fees**" << std::endl;
+                // TODO pay account fees
+            }
+
+        } else if (response == "2"){ //view borrowed items
+            std::cout << "**TODO: view borrowed items**" << std::endl;
+            // TODO display borrowed items
+            
+        } else if (response == "3"){ //return an item
+            std::cout << "=========== ITEM RETURN ==========" << std::endl;
+            std::cout << "Enter ITEM ID to return: ";
+            getline(std::cin, response);
+            std::cout << std::endl;
+            std::cout << "**TODO: return an item**" << std::endl;
+            // TODO ask for item id and handle return
+        
+        }else if (response == "4"){ //search items
+            std::cout << "**TODO: search catalog**" << std::endl;
+            // cat->searchItems(); //blocking func in catalog class
+            // or possibly ask for search keyword and pass into catalog.searchItem()
+            // adjust based on catalog docs ofc
+
+        }else if (response == "5"){ //sign out
+            inLoop = false;
+        }
+    }
+}

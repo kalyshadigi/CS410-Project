@@ -19,6 +19,11 @@ public:
     void borrowBook(const int bookId);
     void returnBook(const int bookId);
 
+    /**
+     * Blocking function that displays the user options
+     * for a patron
+     */
+    void displayActions(Catalog *cat) override;
 };
 
 #endif
