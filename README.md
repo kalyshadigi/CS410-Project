@@ -1,6 +1,6 @@
 # **Project 7: Library Circulation and Hold Management System**
 
-By: Kalysha Melendez Hernandez, Harman Kaur, Wren Root
+By: Kalysha Melendez Hernandez, Harman Kaur, Wren Root, Leonardo Navarro Mercado
 
 ### **Project Goal Statement**
 
