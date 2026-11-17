@@ -33,6 +33,10 @@ target_include_directories(library PUBLIC include)
 add_library(catalog src/Catalog.cpp)
 target_include_directories(catalog PUBLIC include)
 
+add_library(item src/Item.cpp src/Book.cpp src/Game.cpp src/Audiobook.cpp)
+target_include_directories(item PUBLIC include)
+target_link_libraries(item PUBLIC patron)
+
 # -----------------------------
 # include directories
 # -----------------------------
@@ -43,7 +47,7 @@ target_link_libraries(app PRIVATE person)
 target_link_libraries(app PRIVATE librarian)
 target_link_libraries(app PRIVATE library)
 target_link_libraries(app PRIVATE catalog)
-
+target_link_libraries(app PRIVATE item)
 # -----------------------------
 # Fetch GoogleTest
 # -----------------------------
@@ -73,6 +77,16 @@ target_link_libraries(patron_tests PRIVATE
 
 include(GoogleTest)
 gtest_discover_tests(patron_tests)
+
+add_executable(item_tests tests/test_item.cpp)
+
+target_link_libraries(item_tests PRIVATE
+    person
+    patron
+    item
+    GTest::gtest_main
+)
+gtest_discover_tests(item_tests)
 
 
 # -----------------------------

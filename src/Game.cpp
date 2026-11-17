@@ -6,7 +6,7 @@ void Game::create_item() {
     std::getline(std::cin, title);
     std::cout << "Rating: ";
     std::getline(std::cin, rating);
-    std::cin.ignore();
+    //std::cin.ignore();
 }
 
 std::string Game::display_item() const {
