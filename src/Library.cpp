@@ -72,9 +72,9 @@ void Library::incrementClock(){
     int daysToAdd;
     
     std::cout << "======== INCREMENT CLOCK =========" << std::endl;
-    // std::cout << "It is currently Day " << clock->getDay() << std::endl;
-    // std::cout << "Enter number of days to add: ";
-    // std::cin >> daysToAdd;
-    // clock->increment(daysToAdd);
-    // std::cout << "\n Success! It is now Day " << clock->getDay() << std::endl;
+    std::cout << "It is currently Day " << clock->getDay() << std::endl;
+    std::cout << "Enter number of days to add: ";
+    std::cin >> daysToAdd;
+    clock->increment(daysToAdd);
+    std::cout << "\n Success! It is now Day " << clock->getDay() << std::endl;
 };
