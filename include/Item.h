@@ -15,7 +15,7 @@ public:
     Item() = default;
     virtual ~Item() = default;
 
-    void addHold();
+    void addHold(Patron* p);
     Patron* nextHold();
     bool hasHolds() const;
 
