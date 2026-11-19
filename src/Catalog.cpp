@@ -11,6 +11,7 @@
  * - search only returns 3 items - refactor to allow for more/less/scroll
  * - find better way to remove item
  * - figure out how to handle multiple copies
+ * - make sure no patron has item before its removed(/alter their account to reflect change)
  */
 
 std::vector<Item *> Catalog::searchForItem(std::string input) {
@@ -25,6 +26,10 @@ std::vector<Item *> Catalog::searchForItem(std::string input) {
 
 bool Catalog::isValidItemId(int id) {
     return items.count(id);
+}
+
+Item* Catalog::getItem(int id) {
+    return items[id];
 }
 
 void Catalog::search() {

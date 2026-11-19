@@ -9,9 +9,26 @@ Library::Library(){
 }
 
 
-bool Library::personExists(std::string email){
-    return users.count(email);
+bool Library::patronExists(std::string email){
+    for (auto& pair : users){
+        if (pair.first == email){
+            if (Patron* p = dynamic_cast<Patron*>(pair.second)){
+                return true;
+            } else {false;}
+        }
+    }
+    return false;
 };
+
+Patron* Library::getPatron(std::string email){
+    for (auto& pair : users){
+        if (pair.first == email){
+            if (Patron* p = dynamic_cast<Patron*>(pair.second)){
+                return p;
+            } else {false;}
+        }
+    }
+}
 
 void Library::createAccount(bool isLibrarian){
     std::string email;
@@ -22,7 +39,7 @@ void Library::createAccount(bool isLibrarian){
     std::cout << "Enter email: ";
     std::getline(std::cin, email);
     std::cout << std::endl;
-    if (personExists(email)) {
+    if (users.count(email)) {
         std::cout << "This user already exists." << std::endl;
         return;
     }
@@ -40,7 +57,7 @@ void Library::createAccount(bool isLibrarian){
         users[email] = new Patron(totalUsers, name, email, password);
     }
     std::cout << "Account Creatation Successful!" << std::endl;
-    users[email]->displayActions(catalog); //blocking func
+    users[email]->displayActions(this); //blocking func
 };
 
 void Library::signin(){
@@ -51,7 +68,7 @@ void Library::signin(){
     std::cout << "Enter email: ";
     std::getline(std::cin, email);
     std::cout << std::endl;
-    if (!personExists(email)) {
+    if (!users.count(email)) {
         std::cout << "This email is not associated with an account." << std::endl;
         return;
     }
@@ -64,7 +81,7 @@ void Library::signin(){
         return;
     }
 
-    users[email]->displayActions(catalog); //blocking func
+    users[email]->displayActions(this); //blocking func
 };
 
 // will be revised once the Clock class docs are in

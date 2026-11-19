@@ -17,7 +17,6 @@ private:
      */
     std::vector<Item*> searchForItem(std::string input);
 
-    bool isValidItemId(int id);
 
     /**
      * Displays the entire catalog, including IDs and titles
@@ -26,6 +25,8 @@ private:
 
 public:
     Catalog() = default;
+    bool isValidItemId(int id);
+    Item* getItem(int id);
 
     /**
      * Blocking function, allowing user to search catalog
