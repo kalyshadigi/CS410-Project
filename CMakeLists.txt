@@ -100,4 +100,4 @@ gtest_discover_tests(item_tests)
 # cmake -S . -B build
 # cmake --build build
 
-# ctest --test-dir build
+# ctest --test-dir build -C Debug
