@@ -1,0 +1,44 @@
+
+name: CI
+ 
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+ 
+jobs:tests:
+    name: Build and run tests
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+ 
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+          - name: Build test executables
+        run: |
+          targets=$(cmake --build build --target help | grep -oE '[A-Za-z0-9_]+_tests' | sort -u)
+          echo "Building: $targets"
+          cmake --build build --parallel --target $targets
+ 
+      - name: Run tests
+        run: ctest --test-dir build --output-on-failure --timeout 60
+
+build-app:
+    name: Build full program
+    runs-on: ubuntu-latest
+    continue-on-error: true
+ 
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+ 
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+ 
+      - name: Build everything
+        run: cmake --build build --parallel
+ 
