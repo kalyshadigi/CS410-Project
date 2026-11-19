@@ -8,22 +8,41 @@
 class Catalog {
 private:
     std::unordered_map<int, Item*> items;
-    int totalItems = 0;
+    int nextIndex = 1;
+
+    /**
+     * @returns a list of possible Items that match search term
+     *          in the catalog; UP TO 3 RESULTS (for now)
+     * @param input search term
+     */
+    std::vector<Item*> searchForItem(std::string input);
+
+    bool isValidItemId(int id);
+
+    /**
+     * Displays the entire catalog, including IDs and titles
+     */
+    void displayEverything();
+
 public:
-    Catalog();
+    Catalog() = default;
 
     /**
      * Blocking function, allowing user to search catalog
      */
-    void searchItem();
+    void search();
 
     /**
      * Blocking function, allowing user to add item to catalog
      */
     void addItem();
 
-    bool isValidItemId(int id);
-    void removeItem(Item* item);
+    /**
+     * Blocking function, allowing user to remove item to catalog
+     */
+    void removeItem();
+
+    
 };
 
 #endif

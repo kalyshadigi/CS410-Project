@@ -4,8 +4,8 @@
 #include "Librarian.h"
 
 Library::Library(){
-    Catalog* catalog = new Catalog();
-    Clock* clock = new Clock();
+    catalog = new Catalog();
+    clock = new Clock();
 }
 
 

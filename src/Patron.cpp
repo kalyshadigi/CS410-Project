@@ -42,7 +42,7 @@ void Patron::displayActions(Catalog* cat) {
     bool inLoop = true;
     std::string response;
     while (inLoop) {
-        std::cout << getUserName() << "'s Dashboard" << std::endl;
+        std::cout << std::endl << getUserName() << "'s Dashboard" << std::endl;
         std::cout << "==================================" << std::endl;
         std::cout << "Email: " << getEmail() << std::endl;
         std::cout << "Fees: " << getAccountDebt() << std::endl;
@@ -54,7 +54,7 @@ void Patron::displayActions(Catalog* cat) {
         std::cout << "5) SIGN OUT" << std::endl;
         std::cout << "==================================" << std::endl;
         std::cout << "Enter an integer: ";
-        getline(std::cin, response);
+        getline(std::cin >> std::ws, response);
         std::cout << std::endl;
 
         if (response == "1"){ //pay fees
@@ -78,10 +78,7 @@ void Patron::displayActions(Catalog* cat) {
             // TODO ask for item id and handle return
         
         }else if (response == "4"){ //search items
-            std::cout << "**TODO: search catalog**" << std::endl;
-            // cat->searchItems(); //blocking func in catalog class
-            // or possibly ask for search keyword and pass into catalog.searchItem()
-            // adjust based on catalog docs ofc
+            cat->search();
 
         }else if (response == "5"){ //sign out
             inLoop = false;
