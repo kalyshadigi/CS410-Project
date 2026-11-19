@@ -5,6 +5,8 @@
 #include "Catalog.h"
 #include <iostream>
 
+class Library;
+
 class Person {
     private:
         int id;
@@ -28,7 +30,7 @@ class Person {
          * for a patron or librarian
          * Patron and Librarian Classes have their own versions
          */
-        virtual void displayActions(Catalog* cat);
+        virtual void displayActions(Library* lib) = 0;
 };
 
 #endif

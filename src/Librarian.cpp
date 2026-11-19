@@ -1,4 +1,5 @@
 #include "Librarian.h"
+#include "Library.h"
 
 Librarian::Librarian(int personId, std::string personName, std::string personEmail, std::string personPassword)
     : Person(personId, personName, personEmail, personPassword) {}
@@ -28,7 +29,7 @@ void Librarian::removeFromHoldList() {
     // Implement logic for removing a book from the hold list
 }
 
-void Librarian::displayActions(Catalog* cat) {
+void Librarian::displayActions(Library* lib) {
     bool inLoop = true;
     std::string response;
     while (inLoop) {
@@ -47,17 +48,43 @@ void Librarian::displayActions(Catalog* cat) {
         std::cout << std::endl;
 
         if (response == "1"){ //search catalog
-            cat->search();
+            lib->catalog->search();
 
         } else if (response == "2"){ //checkout item
-            std::cout << "**TODO: checkout item**" << std::endl;
-            // TODO ask for patron id, item id, and handle checkout
+            std::cout << "Enter Patron Email: ";
+            getline(std::cin >> std::ws, response);
+            std::cout << std::endl;
+
+            if(!lib->patronExists(response)){
+                std::cout << "Patron Email not in system." << std::endl;
+                continue;
+            }
+            Patron* pat = lib->getPatron(response);
+
+            std::cout << "Enter Item ID: ";
+            getline(std::cin >> std::ws, response);
+            std::cout << std::endl;
+
+            if(!lib->catalog->isValidItemId(stoi(response))){
+                std::cout << "Invalid Item ID" << std::endl;
+                continue;
+            }
+
+            Item* item = lib->catalog->getItem(stoi(response));
+            
+            if (!item->hasHolds() || item->isNextHold(pat)) {
+                pat->borrowBook(stoi(response), item);
+            } else {
+                std::cout << "This item is currently on hold for someone else." << std::endl;
+                item->addHold(pat);
+                std::cout << "You have been added to the end of the wait list." << std::endl;
+            }
             
         } else if (response == "3"){ //add to catalog
-            cat->addItem();
+            lib->catalog->addItem();
         
         }else if (response == "4"){ //remove from catalog
-            cat->removeItem();
+            lib->catalog->removeItem();
 
         }else if (response == "5"){ //sign out
             inLoop = false;

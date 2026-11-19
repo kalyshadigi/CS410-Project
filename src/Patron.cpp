@@ -3,6 +3,8 @@
 #include <vector>
 #include <unordered_map>
 #include <stdexcept>
+#include "Library.h"
+
 
 Patron::Patron(int personId, std::string personName, std::string personEmail, std::string personPassword)
     : Person(personId, personName, personEmail, personPassword), accountDebt(0.0) {}
@@ -22,23 +24,26 @@ double Patron::payAccountDebt(double amount) {
 std::vector<std::string> Patron::getBorrowedBooks() const {
     std::vector<std::string> books;
     for (const auto& pair : borrowedBooks) {
-        books.push_back(pair.second);
+        books.push_back(std::to_string(pair.first) + ". " + pair.second->display_short_name());
     }
     return books;
 }
 
-void Patron::borrowBook(const int bookId) {
-    borrowedBooks[bookId] = "Book " + std::to_string(bookId); // Placeholder title
+void Patron::borrowBook(int id, Item* book) {
+    borrowedBooks[id] = book; // Placeholder title
 }
 
-void Patron::returnBook(const int bookId) {
-    if (getAccountDebt() > 0) {
-        throw std::runtime_error("Please pay your account debt before returning books.");
+void Patron::returnBook(int id, Item* book) {
+    // if (getAccountDebt() > 0) {
+    //     throw std::runtime_error("Please pay your account debt before returning books.");
+    // }
+    borrowedBooks.erase(id);
+    if(book->isNextHold(this)){
+        book->nextHold();
     }
-    borrowedBooks.erase(bookId);
 }
 
-void Patron::displayActions(Catalog* cat) {
+void Patron::displayActions(Library* lib) {
     bool inLoop = true;
     std::string response;
     while (inLoop) {
@@ -58,27 +63,38 @@ void Patron::displayActions(Catalog* cat) {
         std::cout << std::endl;
 
         if (response == "1"){ //pay fees
+            std::cout << "============ PAY FEES ============" << std::endl;
             if (!accountDebt) {
                 std::cout << "This account does not have any fees." << std::endl;
-            } else {
-                std::cout << "**TODO: pay account fees**" << std::endl;
-                // TODO pay account fees
-            }
+                continue;
+            } 
+            double amount;
+            std::cout << "Enter amount to pay: $";
+            std::cin >> amount;
+            payAccountDebt(amount);
+            amount = (accountDebt-amount > 0 ? 0 : amount-accountDebt);
+            std::cout << "Transaction Complete! Amount returned: $" << amount << std::endl;
 
         } else if (response == "2"){ //view borrowed items
-            std::cout << "**TODO: view borrowed items**" << std::endl;
-            // TODO display borrowed items
+            std::cout << "======== BORRORWED ITEMS =========" << std::endl;
+            for (auto& book : getBorrowedBooks()){
+                std::cout << book << std::endl;
+            }
             
         } else if (response == "3"){ //return an item
             std::cout << "=========== ITEM RETURN ==========" << std::endl;
-            std::cout << "Enter ITEM ID to return: ";
+            std::cout << "Enter Item ID to return: ";
             getline(std::cin, response);
             std::cout << std::endl;
-            std::cout << "**TODO: return an item**" << std::endl;
-            // TODO ask for item id and handle return
+
+            if (!lib->catalog->isValidItemId(stoi(response))){
+                std::cout << "Invalid Item ID" << std::endl;
+                continue;
+            }
+            returnBook(stoi(response), lib->catalog->getItem(stoi(response)));
         
         }else if (response == "4"){ //search items
-            cat->search();
+            lib->catalog->search();
 
         }else if (response == "5"){ //sign out
             inLoop = false;
