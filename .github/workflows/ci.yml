@@ -18,7 +18,7 @@ jobs:tests:
  
       - name: Configure
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-          - name: Build test executables
+      - name: Build test executables
         run: |
           targets=$(cmake --build build --target help | grep -oE '[A-Za-z0-9_]+_tests' | sort -u)
           echo "Building: $targets"
