@@ -15,3 +15,7 @@ bool Item::hasHolds() const { return !holdQueue.empty(); }
 std::string Item::display_short_name() const{
     return title.substr(0,15);
 }
+
+bool Item::matchesSearch(std::string term){
+    return title.find(term) != std::string::npos;
+}

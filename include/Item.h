@@ -23,6 +23,11 @@ public:
     virtual std::string display_item() const = 0;
     virtual std::string display_short_name() const;
 
+    /**
+     * returns true if this item matches the search input 
+     * @param term search word, must be substr of title exactly (for now)
+     */
+    bool matchesSearch(std::string term);
 };
 
 #endif
