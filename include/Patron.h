@@ -9,21 +9,21 @@
 class Patron : public Person {
 private:
     double accountDebt;
-    std::unordered_map<int, std::string> borrowedBooks; // Id, Title
+    std::unordered_map<int, Item*> borrowedBooks; // Id, Title
 
 public:
     Patron(int personId, std::string personName, std::string personEmail, std::string personPassword);
     double getAccountDebt();
     double payAccountDebt(double amount);
     std::vector<std::string> getBorrowedBooks() const;
-    void borrowBook(const int bookId);
-    void returnBook(const int bookId);
+    void borrowBook(int id, Item* book);
+    void returnBook(int id, Item *book);
 
     /**
      * Blocking function that displays the user options
      * for a patron
      */
-    void displayActions(Catalog *cat) override;
+    void displayActions(Library* lib) override;
 };
 
 #endif

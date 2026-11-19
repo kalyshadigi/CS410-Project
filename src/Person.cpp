@@ -43,7 +43,3 @@ bool Person::signIn(std::string email, std::string password){
 void Person::signOut() {
     isSignedIn = false;
 }
-
-void Person::displayActions(Catalog* cat){
-    std::cout << "you shouldnt be here... " << std::endl;
-}

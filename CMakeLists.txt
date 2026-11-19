@@ -33,6 +33,9 @@ target_include_directories(library PUBLIC include)
 add_library(catalog src/Catalog.cpp)
 target_include_directories(catalog PUBLIC include)
 
+add_library(clock src/Clock.cpp)
+target_include_directories(clock PUBLIC include)
+
 add_library(item src/Item.cpp src/Book.cpp src/Game.cpp src/Audiobook.cpp)
 target_include_directories(item PUBLIC include)
 target_link_libraries(item PUBLIC patron)
@@ -47,6 +50,7 @@ target_link_libraries(app PRIVATE person)
 target_link_libraries(app PRIVATE librarian)
 target_link_libraries(app PRIVATE library)
 target_link_libraries(app PRIVATE catalog)
+target_link_libraries(app PRIVATE clock)
 target_link_libraries(app PRIVATE item)
 # -----------------------------
 # Fetch GoogleTest
@@ -96,4 +100,4 @@ gtest_discover_tests(item_tests)
 # cmake -S . -B build
 # cmake --build build
 
-# ctest --test-dir build
+# ctest --test-dir build -C Debug
