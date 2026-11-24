@@ -23,8 +23,8 @@ public:
     Library();
     // Library(std::string csvToLoad);
 
-    bool personExists(std::string email);
-    bool personExists(int user_id);
+    bool patronExists(std::string email);
+    Patron* getPatron(std::string email);
 
     /**
      * Blocking function that allows user to create and

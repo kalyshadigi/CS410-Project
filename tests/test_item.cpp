@@ -1,6 +1,6 @@
-// tests/test_item.cpp
-// GoogleTest suite for Item, Book, Game, and Audiobook.
-// Built by the item_tests target in CMakeLists.txt (links person, patron, item, gtest_main).
+//tests/test_item.cpp
+//GoogleTest suite for Item, Book, Game, and Audiobook.
+//Built by the item_tests target in CMakeLists.txt (links person, patron, item, gtest_main).
 
 #include <gtest/gtest.h>
 #include <iostream>
@@ -14,14 +14,14 @@
 #include "Audiobook.h"
 #include "Patron.h"
 
-// -----------------------------
-// Helpers
-// -----------------------------
+//-----------------------------
+//Helpers
+//-----------------------------
 
-// Feeds a string to std::cin for as long as this object exists,
-// so create_item() reads it instead of waiting for keyboard input.
-// clear() resets cin's error/EOF flags, which belong to cin itself
-// and would otherwise leak from one test into the next.
+//Feeds a string to std::cin for as long as this object exists,
+//so create_item() reads it instead of waiting for keyboard input.
+//clear() resets cin's error/EOF flags, which belong to cin itself
+//and would otherwise leak from one test into the next.
 class FakeInput {
     std::istringstream input;
     std::streambuf* original;
@@ -36,8 +36,8 @@ public:
     }
 };
 
-// Silences the "Title: " style prompts create_item() prints,
-// so test output stays readable.
+//Silences the "Title: " style prompts create_item() prints,
+//so test output stays readable.
 class QuietOutput {
     std::ostringstream sink;
     std::streambuf* original;
@@ -46,14 +46,14 @@ public:
     ~QuietOutput() { std::cout.rdbuf(original); }
 };
 
-// Every test makes patrons through this one function.
-// If Patron's constructor changes, update ONLY this function.
-// Person's constructor throws on id <= 0 or an empty name/email/password.
+//Every test makes patrons through this one function.
+//If Patron's constructor changes, update ONLY this function.
+//Person's constructor throws on id <= 0 or an empty name/email/password.
 static Patron makePatron(const std::string& name, int id) {
     return Patron(id, name, name + "@example.com", "password");
 }
 
-// Builds an item of type T from fake input in one call.
+//Builds an item of type T from fake input in one call.
 template <typename T>
 static T makeItem(const std::string& inputLines) {
     T item;
@@ -67,19 +67,19 @@ static bool contains(const std::string& haystack, const std::string& needle) {
     return haystack.find(needle) != std::string::npos;
 }
 
-// Input lines must match the ORDER of prompts in each create_item(),
-// one line per getline / cin >>.
-// Book:      Title, Author, Pages
-// Game:      Title, Rating
-// Audiobook: Title, Author, Narrator, Total Minutes
+//Input lines must match the ORDER of prompts in each create_item(),
+//one line per getline //cin >>.
+//Book:      Title, Author, Pages
+//Game:      Title, Rating
+//Audiobook: Title, Author, Narrator, Total Minutes
 const std::string BOOK_INPUT      = "Dune\nFrank Herbert\n412\n";
 const std::string LONG_BOOK_INPUT = "The Left Hand of Darkness\nUrsula K. Le Guin\n304\n";
 const std::string GAME_INPUT      = "Stardew Valley\nE\n";
 const std::string AUDIO_INPUT     = "Project Hail Mary\nAndy Weir\nRay Porter\n970\n";
 
-// -----------------------------
-// Book
-// -----------------------------
+//-----------------------------
+//Book
+//-----------------------------
 
 TEST(BookTest, CreateItemReadsAllFields) {
     Book b = makeItem<Book>(BOOK_INPUT);
@@ -94,9 +94,9 @@ TEST(BookTest, TitleWithSpacesIsKept) {
     EXPECT_TRUE(contains(b.display_item(), "The Left Hand of Darkness"));
 }
 
-// -----------------------------
-// Game
-// -----------------------------
+//-----------------------------
+//Game
+//-----------------------------
 
 TEST(GameTest, CreateItemReadsAllFields) {
     Game g = makeItem<Game>(GAME_INPUT);
@@ -105,9 +105,9 @@ TEST(GameTest, CreateItemReadsAllFields) {
     EXPECT_TRUE(contains(out, "Rated:  E"));
 }
 
-// -----------------------------
-// Audiobook
-// -----------------------------
+//-----------------------------
+//Audiobook
+//-----------------------------
 
 TEST(AudiobookTest, CreateItemReadsAllFields) {
     Audiobook a = makeItem<Audiobook>(AUDIO_INPUT);
@@ -118,9 +118,9 @@ TEST(AudiobookTest, CreateItemReadsAllFields) {
     EXPECT_TRUE(contains(out, "970"));
 }
 
-// -----------------------------
-// display_short_name (shared in Item)
-// -----------------------------
+//-----------------------------
+//display_short_name (shared in Item)
+//-----------------------------
 
 TEST(ShortNameTest, LongTitleIsCutTo15) {
     Book b = makeItem<Book>(LONG_BOOK_INPUT);
@@ -136,13 +136,13 @@ TEST(ShortNameTest, ShortTitleIsUnchanged) {
 TEST(ShortNameTest, WorksForEverySubclass) {
     Game g = makeItem<Game>(GAME_INPUT);
     Audiobook a = makeItem<Audiobook>(AUDIO_INPUT);
-    EXPECT_EQ(g.display_short_name(), "Stardew Valley");     // 14 chars, unchanged
-    EXPECT_EQ(a.display_short_name(), "Project Hail Ma");    // cut to 15
+    EXPECT_EQ(g.display_short_name(), "Stardew Valley");     //14 chars, unchanged
+    EXPECT_EQ(a.display_short_name(), "Project Hail Ma");    //cut to 15
 }
 
-// -----------------------------
-// Hold queue (shared in Item)
-// -----------------------------
+//-----------------------------
+//Hold queue (shared in Item)
+//-----------------------------
 
 TEST(HoldQueueTest, StartsEmpty) {
     Book b;
@@ -172,9 +172,9 @@ TEST(HoldQueueTest, EmptyAfterDrainReturnsNull) {
     EXPECT_EQ(g.nextHold(), nullptr);
 }
 
-// -----------------------------
-// Polymorphism through Item*
-// -----------------------------
+//-----------------------------
+//Polymorphism through Item*
+//-----------------------------
 
 TEST(PolymorphismTest, BasePointerCallsSubclassVersion) {
     std::unique_ptr<Item> item = std::make_unique<Book>();

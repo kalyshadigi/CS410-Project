@@ -2,7 +2,6 @@
 #define LIBRARIAN_H
 
 #include "Person.h"
-#include "Library.h"
 
 class Librarian : public Person {
 public:
@@ -21,7 +20,7 @@ public:
      * Blocking function that displays the user options
      * for a librarian
      */
-    void displayActions(Catalog *cat) override;
+    void displayActions(Library* lib) override;
 };
 
 #endif
