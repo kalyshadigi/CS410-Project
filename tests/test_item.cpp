@@ -136,8 +136,8 @@ TEST(ShortNameTest, ShortTitleIsUnchanged) {
 TEST(ShortNameTest, WorksForEverySubclass) {
     Game g = makeItem<Game>(GAME_INPUT);
     Audiobook a = makeItem<Audiobook>(AUDIO_INPUT);
-    EXPECT_EQ(g.display_short_name(), "Stardew Valley");     14 chars, unchanged
-    EXPECT_EQ(a.display_short_name(), "Project Hail Ma");    cut to 15
+    EXPECT_EQ(g.display_short_name(), "Stardew Valley");     //14 chars, unchanged
+    EXPECT_EQ(a.display_short_name(), "Project Hail Ma");    //cut to 15
 }
 
 //-----------------------------
