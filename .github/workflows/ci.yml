@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+
+  concurrency:  # new addition
+  group: ci-${{ github.ref }}  # new addition
+  cancel-in-progress: true
  
 jobs:
   tests:
@@ -14,32 +18,34 @@ jobs:
       runs-on: ubuntu-latest
  
       steps:
-        - name: Check out code
-          uses: actions/checkout@v4
+      - name: Check out code
+        uses: actions/checkout@v4
  
-        - name: Configure
-          run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-        - name: Build test executables
-          run: |
-            targets=$(cmake --build build --target help | grep -oE '[A-Za-z0-9_]+_tests' | sort -u)
-            echo "Building: $targets"
-            cmake --build build --parallel --target $targets
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
  
-        - name: Run tests
-          run: ctest --test-dir build --output-on-failure --timeout 60
+      - name: Build test executables
+        run: cmake --build build --parallel --target all_tests  # new addition
+ 
+      - name: Run tests
+        run: ctest --test-dir build --output-on-failure --timeout 60 --output-junit test-results.xml  # new addition
+ 
+      - name: Upload test results  # new addition
+        if: always()  # new addition
+        uses: actions/upload-artifact@v4  # new addition
+        with:  # new addition
+          name: test-results  # new addition
+          path: build/test-results.xml  # new addition
 
   build-app:
       name: Build full program
       runs-on: ubuntu-latest
-      continue-on-error: true
- 
       steps:
-        - name: Check out code
-          uses: actions/checkout@v4
-  
-        - name: Configure
-          run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-  
-        - name: Build everything
-          run: cmake --build build --parallel
+      - name: Check out code
+        uses: actions/checkout@v4
  
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+ 
+      - name: Build app  # new addition
+        run: cmake --build build --parallel --target app  # new addition
