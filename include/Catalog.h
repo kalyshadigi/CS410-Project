@@ -3,6 +3,7 @@
 
 #include "Item.h"
 #include <unordered_map>
+#include <vector>
 #include <string>
 
 class Catalog {
