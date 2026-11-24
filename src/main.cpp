@@ -25,7 +25,7 @@ int main() {
         cout << "5) EXIT" << endl;
         cout << "==================================" << endl;
         cout << "Enter an integer: ";
-        getline(cin, choice);
+        getline(cin >> std::ws, choice);
         cout << endl;
 
         if (choice == "1"){
