@@ -11,3 +11,7 @@
 >  
 >Students should not assume that submitting a transcript of AI prompts is a substitute for engineering
 reasoning
+
+//11.05 
+
+I had previously asked the ai for a sudocode which I did not like, I asked it for another version and ended up tweaking the majority of it to ensure tht it would fit the needs I wanted instead of just blindinly following it. This is still a draft that will be edited since a lot of the code is not yet done but that is good enough for a skeleton.

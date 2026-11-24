@@ -19,7 +19,8 @@ private:
 
 public:
     Clock();
-
+    Patron();
+    Catalog();
     // Member functions
     void customerCheckingOut(Patron* currentPatron, Catalog* item);
     void clockStatus();

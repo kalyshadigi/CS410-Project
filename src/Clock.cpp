@@ -17,7 +17,7 @@ void Clock::clockStatus(){
     long days = elapsedSeconds/10;
 
     bool overdue = false;
-        //taken out day is just a place holder for now since the catalog area hasnt been 
+        //taken out day is just a place holder for now since the item area hasnt been 
         //finished yet
     if(days > customerItem->takenOutDays){
         overdue = true;
